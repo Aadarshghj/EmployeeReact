@@ -5,6 +5,7 @@ import Grid from '@mui/material/Grid2';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
+import adminAxios from '../adminaxios';
 
 const EmForm = () => {
   const location = useLocation();
@@ -35,7 +36,7 @@ console.log(val);
 const handleSubmit = (e) =>{
   e.preventDefault();
   if (location.state != null) {
-    axios.put(`http://localhost:3000/api/employeelist/${location.state.val._id}`, val)
+    adminAxios.put(`http://localhost:3000/api/employeelist/${location.state.val._id}`, val)
       .then((res) => {
         alert(res.data);
         navigate('/dash'); 
@@ -45,7 +46,7 @@ const handleSubmit = (e) =>{
         alert("Error updating employee.");
       });
   } else {
-    axios.post('http://localhost:3000/api/employeelist', val)
+    adminAxios.post('http://localhost:3000/api/employeelist', val)
       .then((res) => {
         console.log(res)
         alert("Employee added successfully");
@@ -53,8 +54,8 @@ const handleSubmit = (e) =>{
         navigate('/dash');
       })
       .catch((err) => {
-        console.log(err);
-        alert("Error adding employee.");
+        console.log(err.response || err);  
+                alert("Error adding employee.");
       });
   }
 

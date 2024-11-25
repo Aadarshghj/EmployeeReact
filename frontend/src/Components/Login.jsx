@@ -11,7 +11,7 @@ import axios from 'axios'
 
 const Login = () => {
   const navigate = useNavigate();
-  const[val,setVal] = useState();
+  const[val,setVal] = useState({});
 const inputhandler=(e)=>{
   setVal({...val,[e.target.name]:e.target.value});
 
@@ -19,19 +19,34 @@ const inputhandler=(e)=>{
 
 }
 
-const addhandler= () =>{
+const addhandler = () => {
+  axios
+      .post('http://localhost:3000/user/login', val)
+      .then((res) => {
+          alert(res.data.message);
+          if (res.data.token) {
+              sessionStorage.setItem('token', res.data.token);
+              alert('Welcome User');
+              navigate('/dash');
+          } else if (res.data.admintoken) {
+              sessionStorage.setItem('admintoken', res.data.admintoken);
+              alert('Welcome Admin');
+              navigate('/dash');
+          }
+      })
+      .catch((err) => {
+          if (err.response && err.response.status === 404) {
+              alert('User not found. Please sign up.');
+          } else if (err.response && err.response.status === 401) {
+              alert('Invalid password or user type.');
+          } else {
+              console.error(err);
+              alert('An unexpected error occurred.');
+          }
+      });
+};
 
-  console.log(val)
-  axios.post('http://localhost:3000/user/login',val).then((res)=>{
-    console.log(res)
-    alert(res.data);
-    navigate('/dash')
-  })
-  .catch((err)=>{
-    console.log(error)
 
-  })
-}
 
   return (
     <div style={{margin:'15%'}}>

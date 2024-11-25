@@ -9,6 +9,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import '../adminaxios'
+import '../useraxios'
+import adminAxios from '../adminaxios';
 
 const EmpDashboard = () => {
     const [data,setData]= useState([]);
@@ -28,7 +31,7 @@ console.log(err);
 
 
 const deleteEmp = (id) => {
-  axios
+  adminAxios
     .delete(`http://localhost:3000/api/employeelist/${id}`)
     .then((res) => {
       
@@ -44,7 +47,7 @@ function update_data(val){
 navigate('/form',{state:{val}})
 }
 const fetchData = () => {
-  axios
+  adminAxios
     .get("http://localhost:3000/api/employeelist")
     .then((res) => {
   

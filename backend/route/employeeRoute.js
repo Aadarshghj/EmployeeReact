@@ -4,8 +4,17 @@ router.use(express.json())
 const employeeModel=require('../model/employeModel')
 
 
+
 // send data from db
 //TODO: get data from db  using api '/api/employeelist'
+
+    
+  
+ 
+  
+  
+
+
 
 router.get('/employeelist',async (req,res)=>{
     try {
@@ -40,7 +49,7 @@ router.get('/employeelist/:id', async (req, res) => {
 //TODO: send data from db using api '/api/employeelist'
 //Request body format:{name:'',location:'',position:'',salary:''}
 
-router.post('/employeelist',async (req,res)=>{
+router.post('/employeelist', async (req,res)=>{
     try {
         
         await new employeeModel(req.body).save();
